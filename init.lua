@@ -148,6 +148,9 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- Automatically change directory on open
+-- vim.opt.autochdir = true
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -541,8 +544,16 @@ require('lazy').setup {
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
+        tsserver = {
+          init_options = {
+            -- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#preferences-options
+            preferences = {
+              -- "shortest" | "project-relative" | "relative" | "non-relative";
+              importModuleSpecifierPreference = 'relative',
+            },
+          },
+        },
+        -- TODO: Add Ruby LSP
 
         lua_ls = {
           -- cmd = {...},
@@ -781,7 +792,7 @@ require('lazy').setup {
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
+        ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'javascript', 'ruby', 'angular' },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
